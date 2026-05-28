@@ -1,41 +1,143 @@
 <!DOCTYPE html>
 <html lang="ckb">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Panel - The Floor</title>
-    <link rel="stylesheet" href="admin-style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXINFLIX - پەڕەی ئەدمین (یاریزانەکان)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Exinflix Regular', 'Poppins', sans-serif;
+      background: #0B0B12;
+      color: white;
+      padding: 2rem;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 { color: #FF006E; margin-bottom: 2rem; text-align: center; }
+    .card {
+      background: rgba(20,20,35,0.8);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    h2 { margin-bottom: 1rem; color: #FF7A00; }
+    input, select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 0.5rem;
+      color: white;
+      font-family: inherit;
+    }
+    button {
+      background: linear-gradient(135deg, #FF006E, #FF7A00);
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { opacity: 0.9; transform: scale(1.01); }
+    .player-list { margin-top: 1rem; }
+    .player-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .delete-btn {
+      background: rgba(255,0,0,0.3);
+      padding: 0.25rem 0.75rem;
+      width: auto;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-    <div class="admin-container">
-        <h1>🛠️ پەڕەی بەڕێوەبردن</h1>
-        <p>وێنە و ناو زیاد بکە بۆ هەر کاتەگۆرییەک</p>
+<div class="container">
+  <h1>⚙️ پەڕەی ئەدمین - یاریزانەکان</h1>
 
-        <div class="admin-card">
-            <h2>➕ زیادکردنی ناوێکی نوێ</h2>
-            <select id="admin-category">
-                <option value="animals">ئاژەڵان</option>
-                <option value="birds">باڵندەکان</option>
-                <option value="flags">ئاڵای وڵاتان</option>
-                <option value="maps">نەخشەی وڵاتان</option>
-                <option value="players">ناوی یاریزانان</option>
-                <option value="leaders">ناوی سەرۆکەکان</option>
-                <option value="celebrities">کەسایتی گەورە</option>
-                <option value="furniture">کەل و پەل</option>
-                <option value="cars">ئۆتۆمبێل</option>
-                <option value="brands">لۆگۆی براندەکان</option>
-                <option value="car_logos">لۆگۆی ئۆتۆمبێل</option>
-                <option value="games">یاریە ئەلیکترۆنیەکان</option>
-            </select>
-            <input type="text" id="new-item-name" placeholder="ناوی نوێ (بۆ نموونە: کەرکوک)">
-            <button id="add-item-btn" class="btn-admin">زیادکردن</button>
-        </div>
+  <!-- زیادکردنی یاریزان -->
+  <div class="card">
+    <h2>➕ زیادکردنی یاریزان</h2>
+    <input type="text" id="playerName" placeholder="ناوی یاریزان (بۆ نموونە: سارا)">
+    <button id="addPlayerBtn">زیادکردن</button>
+  </div>
 
-        <div class="admin-card">
-            <h2>📋 لیستی هەموو ناوەکان</h2>
-            <div id="items-list"></div>
-        </div>
-        <button id="download-data" class="btn-gold">💾 دابەزاندنی داتاکان (JSON)</button>
-    </div>
-    <script src="admin-script.js"></script>
+  <!-- ڕێکخستنی کاتەکان -->
+  <div class="card">
+    <h2>⏱️ ڕێکخستنی کاتی یاری</h2>
+    <label>کاتی هەر یاریزان (چرکە):</label>
+    <input type="number" id="playerTime" value="45" min="10" max="300">
+    <label>کاتی پاس (چرکە):</label>
+    <input type="number" id="passTime" value="3" min="1" max="30">
+    <button id="saveTimeBtn">پاشەکەوتکردنی کاتەکان</button>
+  </div>
+
+  <!-- لیستی یاریزانەکان -->
+  <div class="card">
+    <h2>📋 لیستی یاریزانەکان</h2>
+    <div id="playerList" class="player-list"></div>
+  </div>
+</div>
+
+<script>
+  // بارکردن و پاشەکەوتکردنی داتاکان لە localStorage
+  let players = JSON.parse(localStorage.getItem('game_players')) || [];
+  let gameSettings = JSON.parse(localStorage.getItem('game_settings')) || { playerTime: 45, passTime: 3 };
+
+  function savePlayers() {
+    localStorage.setItem('game_players', JSON.stringify(players));
+    renderPlayerList();
+  }
+
+  function renderPlayerList() {
+    const container = document.getElementById('playerList');
+    if (!container) return;
+    if (players.length === 0) {
+      container.innerHTML = '<div style="text-align:center; padding:1rem;">هیچ یاریزانێک زیاد نەکراوە</div>';
+      return;
+    }
+    container.innerHTML = players.map((p, idx) => `
+      <div class="player-item">
+        <span>${p.name}</span>
+        <button class="delete-btn" data-index="${idx}">سڕینەوە</button>
+      </div>
+    `).join('');
+    
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(btn.dataset.index);
+        players.splice(idx, 1);
+        savePlayers();
+      });
+    });
+  }
+
+  document.getElementById('addPlayerBtn')?.addEventListener('click', () => {
+    const name = document.getElementById('playerName').value.trim();
+    if (name === '') return alert('تکایە ناوێک بنووسە');
+    players.push({ name });
+    document.getElementById('playerName').value = '';
+    savePlayers();
+  });
+
+  document.getElementById('saveTimeBtn')?.addEventListener('click', () => {
+    const playerTime = parseInt(document.getElementById('playerTime').value);
+    const passTime = parseInt(document.getElementById('passTime').value);
+    if (isNaN(playerTime) || isNaN(passTime)) return;
+    gameSettings.playerTime = playerTime;
+    gameSettings.passTime = passTime;
+    localStorage.setItem('game_settings', JSON.stringify(gameSettings));
+    alert('کاتەکان پاشەکەوت کران');
+  });
+
+  // بارکردنی ڕێکخستنەکان بۆ ناو فۆڕمەکان
+  document.getElementById('playerTime').value = gameSettings.playerTime;
+  document.getElementById('passTime').value = gameSettings.passTime;
+  renderPlayerList();
+</script>
 </body>
 </html>
