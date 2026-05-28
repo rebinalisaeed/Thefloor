@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ckb">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel - The Floor</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>🛠️ پەڕەی بەڕێوەبردن</h1>
+        <p>وێنە و ناو زیاد بکە بۆ هەر کاتەگۆرییەک</p>
+
+        <div class="admin-card">
+            <h2>➕ زیادکردنی ناوێکی نوێ</h2>
+            <select id="admin-category">
+                <option value="animals">ئاژەڵان</option>
+                <option value="birds">باڵندەکان</option>
+                <option value="flags">ئاڵای وڵاتان</option>
+                <option value="maps">نەخشەی وڵاتان</option>
+                <option value="players">ناوی یاریزانان</option>
+                <option value="leaders">ناوی سەرۆکەکان</option>
+                <option value="celebrities">کەسایتی گەورە</option>
+                <option value="furniture">کەل و پەل</option>
+                <option value="cars">ئۆتۆمبێل</option>
+                <option value="brands">لۆگۆی براندەکان</option>
+                <option value="car_logos">لۆگۆی ئۆتۆمبێل</option>
+                <option value="games">یاریە ئەلیکترۆنیەکان</option>
+            </select>
+            <input type="text" id="new-item-name" placeholder="ناوی نوێ (بۆ نموونە: کەرکوک)">
+            <button id="add-item-btn" class="btn-admin">زیادکردن</button>
+        </div>
+
+        <div class="admin-card">
+            <h2>📋 لیستی هەموو ناوەکان</h2>
+            <div id="items-list"></div>
+        </div>
+        <button id="download-data" class="btn-gold">💾 دابەزاندنی داتاکان (JSON)</button>
+    </div>
+    <script src="admin-script.js"></script>
+</body>
+</html>
