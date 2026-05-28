@@ -3,50 +3,77 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     background: #0a0a0a;
     font-family: 'Segoe UI', sans-serif;
-    padding: 40px;
+    padding: 30px;
     color: white;
 }
+
 .admin-container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
 }
+
 h1 {
     color: #D4AF37;
     margin-bottom: 10px;
+    text-align: center;
 }
+
 .admin-card {
     background: #111;
     padding: 25px;
     border-radius: 32px;
-    margin: 30px 0;
+    margin-bottom: 30px;
     border: 1px solid #D4AF37;
 }
-select, input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 60px;
+
+.admin-card h2 {
+    color: #D4AF37;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+input, select {
+    flex: 1;
+    padding: 12px 16px;
     background: #1e1e2a;
     color: white;
     border: 1px solid #D4AF37;
+    border-radius: 40px;
+    font-size: 1rem;
 }
+
 .btn-admin, .btn-gold {
     background: #D4AF37;
     color: black;
     font-weight: bold;
     padding: 12px 24px;
     border: none;
-    border-radius: 60px;
+    border-radius: 40px;
     cursor: pointer;
+    transition: 0.2s;
 }
-.items-grid {
+
+.btn-admin:hover, .btn-gold:hover {
+    transform: scale(0.98);
+}
+
+.items-list {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: 15px;
 }
+
 .item-badge {
     background: #2a2a2a;
     padding: 8px 16px;
@@ -55,11 +82,22 @@ select, input {
     gap: 12px;
     align-items: center;
 }
+
 .item-badge button {
-    background: red;
+    background: #9E2A2A;
     color: white;
     border: none;
     border-radius: 30px;
-    padding: 2px 8px;
+    padding: 2px 10px;
     cursor: pointer;
+}
+
+.settings-group {
+    margin-bottom: 20px;
+}
+
+.settings-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #D4AF37;
 }
