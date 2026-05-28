@@ -1,56 +1,123 @@
-// -------------------- داتای بنەڕەتی --------------------
-let gameData = {
-    animals: ["شێر", "پڵنگ", "فیل", "زرافە", "کەروێشک", "مەیموون", "گورگ", "ڕێوی", "کەڵەشێر", "ماسی"],
-    birds: ["ھەڵۆ", "باز", "بولبول", "قوو", "کەو", "تاووس", "پاپەغە", "ھومە", "ڕەشەشۆک", "کولەک"],
-    flags: ["عێراق", "ئێران", "تورکیا", "ئەمریکا", "بەریتانیا", "فەڕەنسا", "ئەڵمانیا", "میسر", "عەرەبستانی سعوودی", "ڕووسیا"],
-    maps: ["عێراق", "مەغریب", "جەزائیر", "کەنەدا", "مەکسیک", "ھیندستان", "چین", "ژاپۆن", "ئیتاڵیا", "ئیسپانیا"],
-    players: ["لیۆنێل مێسی", "کریستیانۆ ڕۆناڵدۆ", "نەیمار", "کیلیان مباپێ", "لۆکا مۆدریچ", "سەلاح", "بێنزێما", "ئینیێستا", "ڕۆناڵدۆ نازاری", "زینەدین زیدان"],
-    leaders: ["سەلاحەدین", "قه‌دافى", "ئەتاتورک", "جۆرج واشنتۆن", "نێلسۆن ماندێلا", "مارتن لوتەر کینگ", "جۆن کێنیدی", "وینستۆن چێرچڵ", "گاندی", "چێ گێڤارا"],
-    celebrities: ["سەعدون جابر", "مامۆستا زایر", "هیوا", "مەحمود خۆشناو", "هنریف", "تۆم هەنکس", "وێڵ سمیت", "ئەنجلینا جۆلی", "دواين جۆنسن", "لیدی گاگا"],
-    furniture: ["جێگا", "مێز", "پۆلیف", "قاپ", "ڕەف", "کابینە", "فەرش", "پەنجەرە", "دەرگا", "ئاوێنە"],
-    cars: ["تایۆتا", "ھۆندا", "فۆرد", "بێنز", "بێمو", "فۆڵکس واگن", "نیسان", "کەی ئێم سی", "ھیوندا", "پۆژۆ"],
-    brands: ["ئەپڵ", "سامسۆنگ", "نایکی", "ئەدیداس", "کۆکاکۆلا", "پێپسی", "مەکدۆناڵد", "تێسلا", "گووگڵ", "ئەمازۆن"],
-    car_logos: ["تایۆتا", "فۆرد", "بێنز", "بێمو", "ھۆندا", "نیسان", "فۆڵکس واگن", "تێسلا", "فێراری", "لامبۆرگینی"],
-    games: ["فیفا", "کاڵ ئۆف دیوتی", "پابجی", "فۆرت نایت", "ماینکڕافت", "جی تی ئەی", "ئەسەسینز کریت", "گۆد ئۆف وار", "لێگۆ", "ماریۆ"]
-};
-
+// Global Variables
+let gameData = {};
+let playersList = [];
 let currentCategory = "animals";
-let currentImagesList = [...gameData.animals];
+let currentImagesList = [];
 let currentIndex = 0;
-let currentActive = 1; // 1: yekem, 2: duwem
-let timers = {1: 45.0, 2: 45.0};
-let timerInterval = null;
+let currentActive = 1;
+let timers = {1: 45, 2: 45};
 let gameActive = false;
-let p1Name = "ئارام", p2Name = "ژوان";
-let passPenalty = false;
+let timerInterval = null;
+let p1Name = "", p2Name = "";
+let totalTime = 45;
+let passPenalty = 3;
+let isLoading = true;
 
-const imageMap = {
-    animals: "https://picsum.photos/id/1/300/200",
-    birds: "https://picsum.photos/id/6/300/200",
-    flags: "https://picsum.photos/id/32/300/200",
-    maps: "https://picsum.photos/id/35/300/200",
-    players: "https://picsum.photos/id/64/300/200",
-    leaders: "https://picsum.photos/id/88/300/200",
-    celebrities: "https://picsum.photos/id/91/300/200",
-    furniture: "https://picsum.photos/id/96/300/200",
-    cars: "https://picsum.photos/id/107/300/200",
-    brands: "https://picsum.photos/id/21/300/200",
-    car_logos: "https://picsum.photos/id/11/300/200",
-    games: "https://picsum.photos/id/0/300/200"
-};
+// Load data from JSON file
+async function loadGameData() {
+    const loadingDiv = document.getElementById("loading-status");
+    if (loadingDiv) loadingDiv.innerHTML = "⏳ بارکردنی داتا لە JSON فایل...";
+    
+    try {
+        const response = await fetch('floor-data.json');
+        if (!response.ok) throw new Error('JSON فایل نەدۆزرایەوە');
+        const data = await response.json();
+        
+        gameData = data.categories || {};
+        playersList = data.players || [];
+        totalTime = data.settings?.totalTime || 45;
+        passPenalty = data.settings?.passPenalty || 3;
+        
+        if (loadingDiv) loadingDiv.innerHTML = "✅ داتا سەرکەوتوو بارکرا!";
+        console.log("✅ داتا لە JSON فایلەوە بارکرا");
+    } catch (error) {
+        console.error("❌ هەڵە لە بارکردنی JSON:", error);
+        if (loadingDiv) loadingDiv.innerHTML = "⚠️ JSON فایل نەدۆزرایەوە، داتای بنەڕەتی بەکاردهێنرێت";
+        setDefaultData();
+    }
+    
+    populateCategorySelect();
+    populatePlayerSelects();
+    isLoading = false;
+}
 
-function getImageUrl(category) {
-    return imageMap[category] || "https://picsum.photos/id/26/300/200";
+function setDefaultData() {
+    gameData = {
+        animals: ["شێر", "پڵنگ", "فیل", "زرافە", "کەروێشک"],
+        birds: ["ھەڵۆ", "باز", "بولبول", "قوو", "کەو"],
+        flags: ["عێراق", "ئێران", "تورکیا", "ئەمریکا", "بەریتانیا"],
+        maps: ["عێراق", "مەغریب", "جەزائیر", "کەنەدا", "مەکسیک"],
+        players_names: ["مێسی", "ڕۆناڵدۆ", "نەیمار", "مباپێ"],
+        leaders: ["سەلاحەدین", "قەدافی", "ئەتاتورک"],
+        celebrities: ["تۆم هەنکس", "وێڵ سمیت", "ئەنجلینا جۆلی"],
+        furniture: ["جێگا", "مێز", "پۆلیف"],
+        cars: ["تایۆتا", "ھۆندا", "فۆرد"],
+        brands: ["ئەپڵ", "سامسۆنگ", "نایکی"],
+        car_logos: ["تایۆتا", "فۆرد", "بێنز"],
+        games: ["فیفا", "کاڵ ئۆف دیوتی", "پابجی"]
+    };
+    playersList = ["ئارام", "ژوان", "سۆران"];
+    totalTime = 45;
+    passPenalty = 3;
+}
+
+function populateCategorySelect() {
+    const select = document.getElementById("category-select");
+    if (!select) return;
+    select.innerHTML = "";
+    const categoryNames = {
+        animals: "🦁 ئاژەڵان",
+        birds: "🦜 باڵندەکان",
+        flags: "🏁 ئاڵای وڵاتان",
+        maps: "🗺️ نەخشەی وڵاتان",
+        players_names: "⚽ ناوی یاریزانان",
+        leaders: "👑 ناوی سەرۆکەکان",
+        celebrities: "⭐ کەسایتی گەورە",
+        furniture: "🛋️ کەل و پەل",
+        cars: "🚗 ئۆتۆمبێل",
+        brands: "🏷️ لۆگۆی براندەکان",
+        car_logos: "🚘 لۆگۆی ئۆتۆمبێل",
+        games: "🎮 یاریە ئەلیکترۆنیەکان"
+    };
+    
+    Object.keys(gameData).forEach(cat => {
+        const displayName = categoryNames[cat] || cat;
+        select.innerHTML += `<option value="${cat}">${displayName}</option>`;
+    });
+}
+
+function populatePlayerSelects() {
+    const p1Select = document.getElementById("player1-select");
+    const p2Select = document.getElementById("player2-select");
+    if (!p1Select || !p2Select) return;
+    p1Select.innerHTML = "";
+    p2Select.innerHTML = "";
+    playersList.forEach(p => {
+        p1Select.innerHTML += `<option value="${p}">${p}</option>`;
+        p2Select.innerHTML += `<option value="${p}">${p}</option>`;
+    });
 }
 
 function loadQuestion() {
     if (!gameActive) return;
-    const imgElement = document.getElementById("current-image");
-    imgElement.src = getImageUrl(currentCategory);
-    const categoryName = document.getElementById("category-select").options[document.getElementById("category-select").selectedIndex]?.text.split(" ")[1] || "بابەت";
-    document.getElementById("category-badge").innerText = categoryName;
-    document.getElementById("answer-input").value = "";
-    document.getElementById("answer-input").focus();
+    const imgElement = document.getElementById("game-image");
+    const randomId = Math.floor(Math.random() * 200) + 1;
+    imgElement.src = `https://picsum.photos/id/${randomId}/1920/1080`;
+    document.getElementById("status-msg").innerHTML = "";
+    document.getElementById("correct-badge").innerHTML = "❓";
+}
+
+function updateTimersUI() {
+    document.getElementById("p1-time").innerHTML = timers[1].toFixed(1);
+    document.getElementById("p2-time").innerHTML = timers[2].toFixed(1);
+    
+    if (currentActive === 1) {
+        document.getElementById("p1-info").classList.add("active-turn");
+        document.getElementById("p2-info").classList.remove("active-turn");
+    } else {
+        document.getElementById("p2-info").classList.add("active-turn");
+        document.getElementById("p1-info").classList.remove("active-turn");
+    }
 }
 
 function switchTurn() {
@@ -60,16 +127,11 @@ function switchTurn() {
         return;
     }
     currentActive = currentActive === 1 ? 2 : 1;
-    document.getElementById("p1-card").classList.toggle("active-player");
-    document.getElementById("p2-card").classList.toggle("active-player");
-    document.getElementById("game-status").innerHTML = `🎤 نۆرە بۆ ${currentActive === 1 ? p1Name : p2Name}`;
-}
-
-function updateTimersUI() {
-    document.getElementById("p1-timer").innerText = timers[1].toFixed(1);
-    document.getElementById("p2-timer").innerText = timers[2].toFixed(1);
-    document.getElementById("p1-fill").style.width = `${(timers[1] / 45) * 100}%`;
-    document.getElementById("p2-fill").style.width = `${(timers[2] / 45) * 100}%`;
+    updateTimersUI();
+    document.getElementById("status-msg").innerHTML = `نۆرەی ${currentActive === 1 ? p1Name : p2Name}`;
+    setTimeout(() => {
+        if (gameActive) document.getElementById("status-msg").innerHTML = "";
+    }, 1500);
 }
 
 function startTimer() {
@@ -95,16 +157,25 @@ function endGame(winner) {
     gameActive = false;
     if (timerInterval) clearInterval(timerInterval);
     const winnerName = winner === 1 ? p1Name : p2Name;
-    document.getElementById("game-status").innerHTML = `🏆 براوە: ${winnerName} 🏆 کلیک لە F5 بکە بۆ یاری نوێ`;
-    alert(`🏆 یاری کۆتایی هات! براوە: ${winnerName}`);
+    alert(`🏆 کۆتایی! براوە: ${winnerName} 🏆\nکلیکی ئۆک بکە بۆ گەڕانەوە`);
+    location.reload();
 }
 
-function checkAnswer() {
+function checkAnswer(answerText) {
     if (!gameActive) return;
-    const answer = document.getElementById("answer-input").value.trim().toLowerCase();
+    if (!currentImagesList[currentIndex]) {
+        endGame(currentActive);
+        return;
+    }
     const correctAnswer = currentImagesList[currentIndex].toLowerCase();
-    if (answer === correctAnswer) {
-        // وەڵامی ڕاست
+    const userAnswer = answerText.trim().toLowerCase();
+    
+    if (userAnswer === correctAnswer) {
+        document.getElementById("correct-badge").innerHTML = "✅ دروستە!";
+        setTimeout(() => {
+            if (gameActive) document.getElementById("correct-badge").innerHTML = "❓";
+        }, 500);
+        
         currentIndex++;
         if (currentIndex >= currentImagesList.length) {
             endGame(currentActive);
@@ -113,16 +184,16 @@ function checkAnswer() {
         switchTurn();
         loadQuestion();
     } else {
-        document.getElementById("game-status").innerHTML = "❌ وەڵام هەڵەیە! هەوڵبدەرەوە";
+        document.getElementById("status-msg").innerHTML = "❌ هەڵە! هەوڵبدەرەوە";
         setTimeout(() => {
-            if (gameActive) document.getElementById("game-status").innerHTML = "";
+            if (gameActive) document.getElementById("status-msg").innerHTML = "";
         }, 800);
     }
 }
 
 function passQuestion() {
     if (!gameActive) return;
-    timers[currentActive] = Math.max(0, timers[currentActive] - 3);
+    timers[currentActive] = Math.max(0, timers[currentActive] - passPenalty);
     updateTimersUI();
     if (timers[currentActive] <= 0) {
         endGame(3 - currentActive);
@@ -134,37 +205,61 @@ function passQuestion() {
         return;
     }
     loadQuestion();
-    document.getElementById("game-status").innerHTML = "⏭️ پەڕاندن! 3 چرکە سزا";
+    document.getElementById("status-msg").innerHTML = `⏭️ پەڕاندن! ${passPenalty} چرکە سزا`;
     setTimeout(() => {
-        if (gameActive) document.getElementById("game-status").innerHTML = "";
-    }, 800);
+        if (gameActive) document.getElementById("status-msg").innerHTML = "";
+    }, 1000);
 }
 
 function startGame() {
-    p1Name = document.getElementById("player1-name").value.trim() || "یاریکەری یەکەم";
-    p2Name = document.getElementById("player2-name").value.trim() || "یاریکەری دووەم";
-    document.getElementById("p1-name").innerText = p1Name;
-    document.getElementById("p2-name").innerText = p2Name;
+    if (isLoading) {
+        alert("تکایە چاوەڕێ بکە هەتا داتاکان تەواو باربکرێن");
+        return;
+    }
+    
+    p1Name = document.getElementById("player1-select").value;
+    p2Name = document.getElementById("player2-select").value;
     currentCategory = document.getElementById("category-select").value;
-    currentImagesList = [...(gameData[currentCategory] || gameData.animals)];
+    
+    currentImagesList = [...(gameData[currentCategory] || [])];
+    if (currentImagesList.length === 0) {
+        alert("هیچ ناوێک لەم کاتەگۆرییەدا نییە! تکایە بچۆ بۆ Admin Panel و ناو زیاد بکە.");
+        return;
+    }
     currentImagesList = currentImagesList.map(s => s.toLowerCase());
     currentIndex = 0;
-    timers = {1: 45.0, 2: 45.0};
+    timers = {1: totalTime, 2: totalTime};
     currentActive = 1;
     gameActive = true;
+    
+    document.getElementById("p1-name").innerHTML = p1Name;
+    document.getElementById("p2-name").innerHTML = p2Name;
     updateTimersUI();
-    document.getElementById("p1-card").classList.add("active-player");
-    document.getElementById("p2-card").classList.remove("active-player");
-    document.getElementById("setup-section").classList.add("hidden");
-    document.getElementById("game-arena").classList.remove("hidden");
+    
+    document.getElementById("setup-screen").classList.add("hidden");
+    document.getElementById("game-screen").classList.remove("hidden");
+    
     loadQuestion();
     startTimer();
-    document.getElementById("game-status").innerHTML = `⚔️ یاری دەستی پێکرد! نۆرەی ${p1Name}`;
+    document.getElementById("status-msg").innerHTML = `⚔️ دەستپێک! نۆرەی ${p1Name}`;
+    
+    // Request fullscreen
+    document.documentElement.requestFullscreen();
 }
 
-document.getElementById("start-game-btn").addEventListener("click", startGame);
-document.getElementById("check-answer").addEventListener("click", checkAnswer);
-document.getElementById("pass-btn").addEventListener("click", passQuestion);
-document.getElementById("answer-input").addEventListener("keypress", (e) => {
-    if (e.key === "Enter") checkAnswer();
+// Keyboard controls
+document.addEventListener("keydown", (e) => {
+    if (!gameActive) return;
+    if (e.key === "Enter") {
+        e.preventDefault();
+        const answer = prompt("وەڵامەکە بنووسە:");
+        if (answer !== null && answer.trim() !== "") checkAnswer(answer);
+    } else if (e.key === " " || e.key === "Space") {
+        e.preventDefault();
+        passQuestion();
+    }
 });
+
+// Initialize
+loadGameData();
+document.getElementById("start-game-btn").addEventListener("click", startGame);
