@@ -1,95 +1,111 @@
 <!DOCTYPE html>
 <html lang="ckb">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>The Floor - Duel Mode</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXINFLIX - هەڵبژاردنی یاری</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Exinflix Regular', 'Poppins', sans-serif;
+      background: #0B0B12;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(20,20,35,0.8);
+      border-radius: 2rem;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+    h1 { color: #FF006E; margin-bottom: 2rem; }
+    select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 0.75rem;
+      color: white;
+      font-family: inherit;
+    }
+    button {
+      background: linear-gradient(135deg, #FF006E, #FF7A00);
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .category-input {
+      margin: 1rem 0;
+    }
+    .category-input input {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 0.75rem;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header>
-            <h1>⚡ THE FLOOR ⚡</h1>
-            <p>دوارەکە - لە ٤٥ چرکەدا بڕیار بدرێت</p>
-        </header>
+<div class="container">
+  <h1>🎮 هەڵبژاردنی یاری</h1>
+  <div id="playerSelects">
+    <select id="player1Select">
+      <option value="">-- یاریزانی یەکەم هەڵبژێرە --</option>
+    </select>
+    <select id="player2Select">
+      <option value="">-- یاریزانی دووەم هەڵبژێرە --</option>
+    </select>
+  </div>
+  <div class="category-input">
+    <input type="text" id="category" placeholder="کەتەگۆری پێشبرکێ (بۆ نموونە: زانستی گشتی)">
+  </div>
+  <button id="startGameBtn">دەستپێکردنی یاری</button>
+</div>
 
-        <!-- Players Setup Section -->
-        <div id="setup-section" class="setup-card glass">
-            <h2>🧠 دیاریکردنی یاری</h2>
-            <div class="players-input">
-                <div class="input-group">
-                    <label>🎮 یاریکەری یەکەم</label>
-                    <input type="text" id="player1-name" placeholder="ناوەکە بنووسە" value="ئارام">
-                </div>
-                <div class="input-group">
-                    <label>⚔️ یاریکەری دووەم</label>
-                    <input type="text" id="player2-name" placeholder="ناوەکە بنووسە" value="ژوان">
-                </div>
-            </div>
+<script>
+  function loadPlayers() {
+    const players = JSON.parse(localStorage.getItem('game_players')) || [];
+    const select1 = document.getElementById('player1Select');
+    const select2 = document.getElementById('player2Select');
+    if (!select1 || !select2) return;
+    select1.innerHTML = '<option value="">-- یاریزانی یەکەم هەڵبژێرە --</option>';
+    select2.innerHTML = '<option value="">-- یاریزانی دووەم هەڵبژێرە --</option>';
+    players.forEach(p => {
+      const opt1 = document.createElement('option');
+      opt1.value = p.name;
+      opt1.textContent = p.name;
+      const opt2 = opt1.cloneNode(true);
+      select1.appendChild(opt1);
+      select2.appendChild(opt2);
+    });
+  }
 
-            <div class="category-select">
-                <label>📂 هەڵبژاردنی بابەت (کاتەگۆری)</label>
-                <select id="category-select">
-                    <option value="animals">🦁 ئاژەڵان</option>
-                    <option value="birds">🦜 باڵندەکان</option>
-                    <option value="flags">🏁 ئاڵای وڵاتان</option>
-                    <option value="maps">🗺️ نەخشەی وڵاتان</option>
-                    <option value="players">⚽ ناوی یاریزانان</option>
-                    <option value="leaders">👑 ناوی سەرۆکەکان</option>
-                    <option value="celebrities">⭐ کەسایتی گەورە</option>
-                    <option value="furniture">🛋️ کەل و پەل</option>
-                    <option value="cars">🚗 ئۆتۆمبێل</option>
-                    <option value="brands">🏷️ لۆگۆی براندەکان</option>
-                    <option value="car-logos">🚘 لۆگۆی ئۆتۆمبێل</option>
-                    <option value="games">🎮 یاریە ئەلیکترۆنیەکان</option>
-                </select>
-            </div>
+  document.getElementById('startGameBtn')?.addEventListener('click', () => {
+    const player1 = document.getElementById('player1Select').value;
+    const player2 = document.getElementById('player2Select').value;
+    const category = document.getElementById('category').value.trim();
+    if (!player1 || !player2 || player1 === player2) {
+      alert('تکایە دوو یاریزانی جیاواز هەڵبژێرە');
+      return;
+    }
+    if (!category) {
+      alert('تکایە کەتەگۆری پێشبرکێ بنووسە');
+      return;
+    }
+    localStorage.setItem('game_selected_players', JSON.stringify({ player1, player2 }));
+    localStorage.setItem('game_category', category);
+    window.location.href = 'game.html';
+  });
 
-            <button id="start-game-btn" class="btn-gold">▶️ دەستپێکردنی یاری</button>
-        </div>
-
-        <!-- Game Arena -->
-        <div id="game-arena" class="game-arena hidden">
-            <!-- VS Header -->
-            <div class="vs-header">
-                <div class="player-card" id="p1-card">
-                    <span class="player-name" id="p1-name">ئارام</span>
-                    <div class="timer-bar">
-                        <div class="timer-fill" id="p1-fill"></div>
-                    </div>
-                    <div class="timer-text" id="p1-timer">45.0</div>
-                </div>
-                <div class="vs-divider">⚡ VS ⚡</div>
-                <div class="player-card" id="p2-card">
-                    <span class="player-name" id="p2-name">ژوان</span>
-                    <div class="timer-bar">
-                        <div class="timer-fill" id="p2-fill"></div>
-                    </div>
-                    <div class="timer-text" id="p2-timer">45.0</div>
-                </div>
-            </div>
-
-            <!-- Image Box -->
-            <div class="image-box">
-                <img id="current-image" src="" alt="وێنە">
-                <div class="category-badge" id="category-badge">ئاژەڵان</div>
-            </div>
-
-            <!-- Answer Controls -->
-            <div class="answer-area">
-                <input type="text" id="answer-input" placeholder="وەڵامەکەت لێرە بنووسە..." autocomplete="off">
-                <div class="action-buttons">
-                    <button id="check-answer" class="btn-check">✅ وەڵام بدەرەوە</button>
-                    <button id="pass-btn" class="btn-pass">⏭️ پەڕاندن (3 چرکە سزا)</button>
-                </div>
-            </div>
-
-            <!-- Game Status -->
-            <div id="game-status" class="game-status"></div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  loadPlayers();
+</script>
 </body>
 </html>
