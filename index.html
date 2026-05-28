@@ -1,111 +1,61 @@
 <!DOCTYPE html>
 <html lang="ckb">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EXINFLIX - هەڵبژاردنی یاری</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Exinflix Regular', 'Poppins', sans-serif;
-      background: #0B0B12;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: rgba(20,20,35,0.8);
-      border-radius: 2rem;
-      padding: 2rem;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-    }
-    h1 { color: #FF006E; margin-bottom: 2rem; }
-    select, button {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 0.75rem;
-      color: white;
-      font-family: inherit;
-    }
-    button {
-      background: linear-gradient(135deg, #FF006E, #FF7A00);
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .category-input {
-      margin: 1rem 0;
-    }
-    .category-input input {
-      width: 100%;
-      padding: 0.75rem;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 0.75rem;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>The Floor - Full Screen Duel</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-  <h1>🎮 هەڵبژاردنی یاری</h1>
-  <div id="playerSelects">
-    <select id="player1Select">
-      <option value="">-- یاریزانی یەکەم هەڵبژێرە --</option>
-    </select>
-    <select id="player2Select">
-      <option value="">-- یاریزانی دووەم هەڵبژێرە --</option>
-    </select>
-  </div>
-  <div class="category-input">
-    <input type="text" id="category" placeholder="کەتەگۆری پێشبرکێ (بۆ نموونە: زانستی گشتی)">
-  </div>
-  <button id="startGameBtn">دەستپێکردنی یاری</button>
-</div>
+    <!-- Setup Screen -->
+    <div id="setup-screen" class="setup-screen">
+        <div class="setup-card">
+            <h1>⚡ THE FLOOR ⚡</h1>
+            <p>دوارەکە - هەڵبژاردنی یاریزانان و بابەت</p>
+            
+            <div class="setup-group">
+                <label>🎮 یاریکەری یەکەم</label>
+                <select id="player1-select"></select>
+            </div>
+            
+            <div class="setup-group">
+                <label>⚔️ یاریکەری دووەم</label>
+                <select id="player2-select"></select>
+            </div>
+            
+            <div class="setup-group">
+                <label>📂 بابەت (کاتەگۆری)</label>
+                <select id="category-select"></select>
+            </div>
+            
+            <button id="start-game-btn" class="btn-start">▶️ دەستپێکردنی یاری</button>
+            <div id="loading-status" style="color:#D4AF37; margin-top:15px; font-size:0.9rem;"></div>
+        </div>
+    </div>
 
-<script>
-  function loadPlayers() {
-    const players = JSON.parse(localStorage.getItem('game_players')) || [];
-    const select1 = document.getElementById('player1Select');
-    const select2 = document.getElementById('player2Select');
-    if (!select1 || !select2) return;
-    select1.innerHTML = '<option value="">-- یاریزانی یەکەم هەڵبژێرە --</option>';
-    select2.innerHTML = '<option value="">-- یاریزانی دووەم هەڵبژێرە --</option>';
-    players.forEach(p => {
-      const opt1 = document.createElement('option');
-      opt1.value = p.name;
-      opt1.textContent = p.name;
-      const opt2 = opt1.cloneNode(true);
-      select1.appendChild(opt1);
-      select2.appendChild(opt2);
-    });
-  }
+    <!-- Game Screen (Full Screen) -->
+    <div id="game-screen" class="game-screen hidden">
+        <img id="game-image" class="game-image" alt="وێنەی یاری">
+        
+        <!-- Bottom 15% Overlay -->
+        <div class="game-overlay">
+            <div class="players-info">
+                <div class="player-info" id="p1-info">
+                    <span class="player-name-display" id="p1-name">Player 1</span>
+                    <span class="player-time" id="p1-time">00.0</span>
+                </div>
+                <div class="vs-middle">
+                    <span id="correct-badge">❓</span>
+                </div>
+                <div class="player-info" id="p2-info">
+                    <span class="player-name-display" id="p2-name">Player 2</span>
+                    <span class="player-time" id="p2-time">00.0</span>
+                </div>
+            </div>
+            <div class="status-message" id="status-msg"></div>
+        </div>
+    </div>
 
-  document.getElementById('startGameBtn')?.addEventListener('click', () => {
-    const player1 = document.getElementById('player1Select').value;
-    const player2 = document.getElementById('player2Select').value;
-    const category = document.getElementById('category').value.trim();
-    if (!player1 || !player2 || player1 === player2) {
-      alert('تکایە دوو یاریزانی جیاواز هەڵبژێرە');
-      return;
-    }
-    if (!category) {
-      alert('تکایە کەتەگۆری پێشبرکێ بنووسە');
-      return;
-    }
-    localStorage.setItem('game_selected_players', JSON.stringify({ player1, player2 }));
-    localStorage.setItem('game_category', category);
-    window.location.href = 'game.html';
-  });
-
-  loadPlayers();
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
