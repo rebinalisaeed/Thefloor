@@ -1,36 +1,51 @@
 {
   "header": {
-    "title": "SHARIN ALI",
-    "subtitle": "Graphic Designer & Video Editor"
+    "name": "SHARIN ALI",
+    "job": "Graphic Designer & Video Editor"
   },
-  "greeting": {
+  "hero": {
     "title": "سڵاو، من شارین عەلیم",
-    "text": "من کار لە بواری گرافیک دیزاین، ئیدیتی وێنە، فۆتۆشۆپ و مۆنتاژی ڤیدیۆ دەکەم."
+    "description": "بەخێربێیت بۆ پۆرتفۆلیۆی من. لێرە دەتوانیت کارەکانم، ئەزموونەکانم و زانیارییەکانم ببینیت."
   },
-  "tabs": [
+  "sections": [
     {
+      "id": "about",
       "title": "دەربارەی من",
-      "content": "من دیزاینەرێکی گرافیکم و حەزم لە دروستکردنی دیزاینی جوان، پاک و کاریگەرە."
+      "type": "text",
+      "content": "لێرە دەربارەی خۆت بنووسە."
     },
     {
+      "id": "personal",
       "title": "زانیاری کەسی",
-      "content": "ناو: SHARIN ALI\nپیشە: Graphic Designer & Video Editor\nشوێن: Kurdistan / Iraq"
+      "type": "text",
+      "content": "ناو، شوێن، تەلەفۆن..."
     },
     {
+      "id": "experience",
       "title": "ئەزموونی کارکردنم",
-      "content": "ئەزموونم لە دیزاینی پۆست، لۆگۆ، فۆتۆشۆپ، ئیدیتی وێنە و مۆنتاژی ڤیدیۆ هەیە."
+      "type": "text",
+      "content": "ئەزموونی کارەکانت..."
     },
     {
+      "id": "photos",
       "title": "دیزاینی وێنەکانم",
-      "content": "لێرە دەتوانیت نموونەی کارەکانی دیزاینی وێنەکانم دابنێیت."
+      "type": "gallery",
+      "images": []
     },
     {
+      "id": "videos",
       "title": "پڕۆژەی کارە ڤیدیۆکانم",
-      "content": "لێرە دەتوانیت لینکی ڤیدیۆکان یان پڕۆژەکانی مۆنتاژ دابنێیت."
+      "type": "video",
+      "videos": []
     },
     {
+      "id": "contact",
       "title": "پەیوەندی",
-      "content": "WhatsApp: 0000000000\nInstagram: @sharin\nEmail: example@email.com"
+      "type": "contact",
+      "phone": "",
+      "email": "",
+      "facebook": "",
+      "instagram": ""
     }
   ],
   "footer": {
