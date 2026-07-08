@@ -3,356 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>SHARIN ALI | Graphic Designer & Video Editor</title>
-
-  <meta name="description" content="Official portfolio website of SHARIN ALI, Graphic Designer, Photo Editor, and Video Editor." />
-  <meta name="keywords" content="SHARIN ALI, Graphic Designer, Video Editor, Photoshop, Portfolio, Kurdish Designer" />
-  <meta name="author" content="SHARIN ALI" />
-
-  <meta property="og:title" content="SHARIN ALI Portfolio" />
-  <meta property="og:description" content="Graphic Designer, Photo Editor, and Video Editor Portfolio." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="images/profile/profile.jpg" />
-
+  <title>SHARIN ALI | Portfolio</title>
+  <meta name="description" content="Portfolio website for SHARIN ALI, Graphic Designer and Video Editor." />
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-
-  <div class="bg-blur bg-blur-one"></div>
-  <div class="bg-blur bg-blur-two"></div>
-
-  <!-- Header -->
   <header class="site-header">
-    <div class="container header-content">
-
-      <a href="#home" class="logo">
-        <span>SHARIN</span>
-        <strong>ALI</strong>
-      </a>
-
-      <nav class="nav-menu" id="navMenu">
-        <a href="#home" data-key="navHome">سەرەکی</a>
-        <a href="#about" data-key="navAbout">دەربارە</a>
-        <a href="#services" data-key="navServices">خزمەتگوزاری</a>
-        <a href="#portfolio" data-key="navPortfolio">کارەکان</a>
-        <a href="#testimonials" data-key="navTestimonials">ڕای کڕیاران</a>
-        <a href="#contact" data-key="navContact">پەیوەندی</a>
+    <div class="container header-inner">
+      <a href="#home" class="brand" id="brandName">SHARIN ALI</a>
+      <nav class="nav">
+        <a href="#home" id="navHome">سەرەکی</a>
+        <a href="#tabs" id="navTabs">بەشەکان</a>
+        <a href="#contact-area" id="navContact">پەیوەندی</a>
       </nav>
-
-      <div class="header-actions">
-        <button class="lang-btn" id="langBtn">EN</button>
-        <button class="menu-btn" id="menuBtn">☰</button>
-      </div>
-
+      <button class="lang-btn" id="langBtn" type="button">EN</button>
     </div>
   </header>
 
   <main>
-
-    <!-- Hero -->
-    <section class="hero-section" id="home">
-      <div class="container hero-content">
-
-        <div class="hero-text reveal">
-          <p class="hero-label" data-key="heroLabel">پۆرتفۆلیۆی دیزاینەر</p>
-
-          <h1>
-            <span data-key="heroTitle1">سڵاو، من</span>
-            <strong>SHARIN ALI</strong>
-          </h1>
-
-          <h2 data-key="heroTitle2">
-            گرافیک دیزاینەر، ئیدیتەری وێنە و ڤیدیۆ
-          </h2>
-
-          <p class="hero-description" data-key="heroDescription">
-            من یارمەتی براندەکان، پەیجەکان و کەسەکان دەدەم تا لە ڕێگەی دیزاینی جوان،
-            وێنەی پیشەیی و ڤیدیۆی کاریگەر، خۆیان بە شێوەیەکی پیشەیی‌تر پیشان بدەن.
-          </p>
-
-          <div class="hero-buttons">
-            <a href="#portfolio" class="primary-btn" data-key="viewWorks">بینینی کارەکانم</a>
-            <a href="#contact" class="secondary-btn" data-key="contactMe">پەیوەندیم پێوە بکە</a>
-          </div>
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="job" id="heroJob">گرافیک دیزاینەر و ئیدیتەری ڤیدیۆ</p>
+          <h1 id="heroTitle">سڵاو، من شارین عەلیم</h1>
+          <p id="heroDescription">بەخێربێیت بۆ پۆرتفۆلیۆی من.</p>
+          <a href="#tabs" class="main-btn" id="heroButton">بینینی بەشەکان</a>
         </div>
-
-        <div class="hero-visual reveal">
-          <div class="profile-card">
-            <img src="images/profile/profile.jpg" alt="SHARIN ALI Profile Photo" />
-            <div class="profile-info">
-              <h3>SHARIN ALI</h3>
-              <p data-key="profileRole">Graphic Designer & Video Editor</p>
-            </div>
-          </div>
+        <div class="hero-card">
+          <div class="avatar">SA</div>
+          <h2 id="cardName">SHARIN ALI</h2>
+          <p id="cardJob">Graphic Designer & Video Editor</p>
         </div>
-
       </div>
     </section>
 
-    <!-- About -->
-    <section class="section" id="about">
-      <div class="container split-content">
-
-        <div class="section-heading reveal">
-          <p class="section-label" data-key="aboutLabel">دەربارە</p>
-          <h2 data-key="aboutTitle">دەربارەی من</h2>
-        </div>
-
-        <div class="section-body reveal">
-          <p data-key="aboutText">
-            من شارین عەلیم، کارم لە بواری گرافیک دیزاین، ئیدیتی وێنە، فۆتۆشۆپ و مۆنتاژی ڤیدیۆیە.
-            ئامانجم ئەوەیە دیزاینێکی جوان، ڕوون و کاریگەر دروست بکەم کە پەیامی براند یان کەسەکە بەباشی بگەیەنێت.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Services -->
-    <section class="section dark-section" id="services">
+    <section class="tabs-section" id="tabs">
       <div class="container">
-
-        <div class="center-heading reveal">
-          <p class="section-label" data-key="servicesLabel">خزمەتگوزاری</p>
-          <h2 data-key="servicesTitle">چی دەتوانم بۆت بکەم؟</h2>
-        </div>
-
-        <div class="cards-grid">
-
-          <article class="service-card reveal">
-            <span>01</span>
-            <h3 data-key="service1Title">دیزاینی لۆگۆ</h3>
-            <p data-key="service1Text">دروستکردنی لۆگۆی جوان، پاک و تایبەت بۆ براند و پڕۆژەکان.</p>
-          </article>
-
-          <article class="service-card reveal">
-            <span>02</span>
-            <h3 data-key="service2Title">دیزاینی سۆشیال میدیا</h3>
-            <p data-key="service2Text">دیزاینی پۆست، ستۆری، ڕیکلام و کەمپەینی سۆشیال میدیا.</p>
-          </article>
-
-          <article class="service-card reveal">
-            <span>03</span>
-            <h3 data-key="service3Title">ئیدیتی وێنە</h3>
-            <p data-key="service3Text">جوانکردن، ڕێکخستن و دەستکاری پیشەیی وێنەکان.</p>
-          </article>
-
-          <article class="service-card reveal">
-            <span>04</span>
-            <h3 data-key="service4Title">مۆنتاژی ڤیدیۆ</h3>
-            <p data-key="service4Text">مۆنتاژ، ڕێکخستن، ڕەنگدانەوە و دروستکردنی ڤیدیۆی کاریگەر.</p>
-          </article>
-
-        </div>
-
+        <div class="tabs" id="tabButtons"></div>
+        <div class="tab-panel" id="tabPanel"></div>
       </div>
     </section>
 
-    <!-- Featured Project -->
-    <section class="section" id="featured">
+    <section class="contact-area" id="contact-area">
       <div class="container">
-
-        <div class="featured-card reveal">
-          <div class="featured-image">
-            <img src="images/portfolio/featured.jpg" alt="Featured Project" />
-          </div>
-
-          <div class="featured-info">
-            <p class="section-label" data-key="featuredLabel">کاری هەڵبژێردراو</p>
-            <h2 data-key="featuredTitle">Brand Identity Design</h2>
-            <p data-key="featuredText">
-              پڕۆژەیەکی تایبەت بۆ دروستکردنی ناسنامەی براند، لۆگۆ، ڕەنگ، پۆست و شێوازی بینراوی پەیج.
-            </p>
-            <a href="#portfolio" class="primary-btn" data-key="viewProject">بینینی پڕۆژە</a>
-          </div>
-        </div>
-
+        <div class="simple-box" id="contactBox"></div>
       </div>
     </section>
-
-    <!-- Portfolio -->
-    <section class="section dark-section" id="portfolio">
-      <div class="container">
-
-        <div class="center-heading reveal">
-          <p class="section-label" data-key="portfolioLabel">کارەکان</p>
-          <h2 data-key="portfolioTitle">پڕۆژە و دیزاینەکانم</h2>
-        </div>
-
-        <div class="portfolio-controls reveal">
-          <input type="text" id="projectSearch" placeholder="گەڕان بۆ پڕۆژە..." />
-
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="logo">Logo</button>
-            <button class="filter-btn" data-filter="branding">Branding</button>
-            <button class="filter-btn" data-filter="social">Social Media</button>
-            <button class="filter-btn" data-filter="photo">Photo Editing</button>
-            <button class="filter-btn" data-filter="video">Video Editing</button>
-          </div>
-        </div>
-
-        <div class="portfolio-grid" id="portfolioGrid">
-
-          <article class="portfolio-card reveal" data-category="logo" data-title="Logo Design">
-            <img src="images/portfolio/work-1.jpg" alt="Logo Design" />
-            <div class="portfolio-overlay">
-              <span>Logo</span>
-              <h3>Logo Design</h3>
-              <button class="view-btn">View Project</button>
-            </div>
-          </article>
-
-          <article class="portfolio-card reveal" data-category="social" data-title="Social Media Design">
-            <img src="images/portfolio/work-2.jpg" alt="Social Media Design" />
-            <div class="portfolio-overlay">
-              <span>Social Media</span>
-              <h3>Social Media Design</h3>
-              <button class="view-btn">View Project</button>
-            </div>
-          </article>
-
-          <article class="portfolio-card reveal" data-category="photo" data-title="Photo Editing">
-            <img src="images/portfolio/work-3.jpg" alt="Photo Editing" />
-            <div class="portfolio-overlay">
-              <span>Photo Editing</span>
-              <h3>Photo Editing</h3>
-              <button class="view-btn">View Project</button>
-            </div>
-          </article>
-
-          <article class="portfolio-card reveal" data-category="video" data-title="Video Editing">
-            <img src="images/portfolio/work-4.jpg" alt="Video Editing" />
-            <div class="portfolio-overlay">
-              <span>Video Editing</span>
-              <h3>Video Editing</h3>
-              <button class="view-btn">▶ Play Video</button>
-            </div>
-          </article>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Skills -->
-    <section class="section" id="skills">
-      <div class="container">
-
-        <div class="center-heading reveal">
-          <p class="section-label" data-key="skillsLabel">شارەزایی</p>
-          <h2 data-key="skillsTitle">بەرنامە و ئامرازەکان</h2>
-        </div>
-
-        <div class="skills-list reveal">
-          <span>Adobe Photoshop</span>
-          <span>Adobe Illustrator</span>
-          <span>Adobe Premiere Pro</span>
-          <span>Adobe After Effects</span>
-          <span>Canva</span>
-          <span>CapCut</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Statistics -->
-    <section class="stats-section">
-      <div class="container stats-grid">
-
-        <div class="stat-card reveal">
-          <strong>250+</strong>
-          <span data-key="statProjects">پڕۆژە</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <strong>120+</strong>
-          <span data-key="statClients">کڕیار</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <strong>7+</strong>
-          <span data-key="statYears">ساڵ ئەزموون</span>
-        </div>
-
-        <div class="stat-card reveal">
-          <strong>100%</strong>
-          <span data-key="statSatisfaction">ڕازیبوونی کڕیار</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="section dark-section" id="testimonials">
-      <div class="container">
-
-        <div class="center-heading reveal">
-          <p class="section-label" data-key="testimonialsLabel">ڕای کڕیاران</p>
-          <h2 data-key="testimonialsTitle">کڕیاران چی دەڵێن؟</h2>
-        </div>
-
-        <div class="testimonials-grid">
-
-          <article class="testimonial-card reveal">
-            <div class="stars">★★★★★</div>
-            <p data-key="testimonial1Text">
-              کارەکە زۆر پیشەیی و جوان بوو، دیزاینەکان بە خێرایی و بە کوالیتی بەرز تەواو کران.
-            </p>
-            <h3>Ahmed</h3>
-            <span>Business Owner</span>
-          </article>
-
-          <article class="testimonial-card reveal">
-            <div class="stars">★★★★★</div>
-            <p data-key="testimonial2Text">
-              وێنە و ڤیدیۆکانمان دوای ئیدیت زۆر باشتر دەرکەوتن، بەڕاستی کاری جوانە.
-            </p>
-            <h3>Lana</h3>
-            <span>Content Creator</span>
-          </article>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- CTA / Contact -->
-    <section class="section contact-section" id="contact">
-      <div class="container contact-box reveal">
-
-        <p class="section-label" data-key="contactLabel">پەیوەندی</p>
-        <h2 data-key="contactTitle">ئامادەیت پڕۆژەیەک دەست پێبکەین؟</h2>
-        <p data-key="contactText">
-          بۆ داواکاری کار، ڕیکلام، دیزاین، ئیدیتی وێنە یان ڤیدیۆ، دەتوانیت ڕاستەوخۆ پەیوەندی بکەیت.
-        </p>
-
-        <div class="contact-links">
-          <a href="#" data-key="whatsapp">WhatsApp</a>
-          <a href="#" data-key="instagram">Instagram</a>
-          <a href="#" data-key="facebook">Facebook</a>
-          <a href="#" data-key="email">Email</a>
-        </div>
-
-      </div>
-    </section>
-
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p>
-      Graphic Designer Portfolio Website Design by
-      <strong>SHARIN ALI</strong>
-    </p>
-  </footer>
+  <footer class="footer" id="footerText">Graphic Designer Portfolio Website Design by SHARIN ALI</footer>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightboxClose">×</button>
-    <img id="lightboxImage" src="" alt="Portfolio Preview" />
+    <button id="closeLightbox" type="button">×</button>
+    <img id="lightboxImg" alt="Preview" />
   </div>
 
   <script src="script.js"></script>
