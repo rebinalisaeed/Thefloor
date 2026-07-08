@@ -1,54 +1,132 @@
 {
-  "header": {
-    "name": "SHARIN ALI",
-    "job": "Graphic Designer & Video Editor"
-  },
-  "hero": {
-    "title": "سڵاو، من شارین عەلیم",
-    "description": "بەخێربێیت بۆ پۆرتفۆلیۆی من. لێرە دەتوانیت کارەکانم، ئەزموونەکانم و زانیارییەکانم ببینیت."
-  },
-  "sections": [
-    {
-      "id": "about",
-      "title": "دەربارەی من",
-      "type": "text",
-      "content": "لێرە دەربارەی خۆت بنووسە."
+  "languages": {
+    "ku": {
+      "direction": "rtl",
+      "header": {
+        "name": "SHARIN ALI",
+        "job": "گرافیک دیزاینەر و ئیدیتەری ڤیدیۆ",
+        "menu": ["سەرەکی", "بەشەکان", "پەیوەندی"]
+      },
+      "hero": {
+        "title": "سڵاو، من شارین عەلیم",
+        "description": "بەخێربێیت بۆ پۆرتفۆلیۆی من. لێرە دەتوانیت زانیارییەکانم، ئەزموونم، دیزاینی وێنەکانم و پڕۆژەی ڤیدیۆکانم ببینیت.",
+        "button": "بینینی بەشەکان"
+      },
+      "tabs": [
+        {
+          "id": "about",
+          "title": "دەربارەی من",
+          "type": "text",
+          "content": "من کار لە بواری گرافیک دیزاین، ئیدیتی وێنە، فۆتۆشۆپ و مۆنتاژی ڤیدیۆ دەکەم. ئامانجم ئەوەیە کارێکی پاک، جوان و پیشەیی پێشکەش بکەم."
+        },
+        {
+          "id": "personal",
+          "title": "زانیاری کەسی",
+          "type": "text",
+          "content": "ناو: SHARIN ALI\nپیشە: Graphic Designer & Video Editor\nشوێن: Kurdistan / Iraq\nزمان: Kurdish / English"
+        },
+        {
+          "id": "experience",
+          "title": "ئەزموونی کارکردنم",
+          "type": "text",
+          "content": "ئەزموونم هەیە لە دروستکردنی لۆگۆ، پۆست و ستۆری سۆشیال میدیا، ڕیکلام، دەستکاری وێنە، فۆتۆشۆپ و مۆنتاژی ڤیدیۆ."
+        },
+        {
+          "id": "photos",
+          "title": "دیزاینی وێنەکانم",
+          "type": "gallery",
+          "content": "لێرە نموونەی دیزاینەکانم پیشان دەدرێت.",
+          "images": [
+            {"title": "Social Media Design", "src": "images/gallery/work-1.jpg"},
+            {"title": "Logo Design", "src": "images/gallery/work-2.jpg"},
+            {"title": "Poster Design", "src": "images/gallery/work-3.jpg"}
+          ]
+        },
+        {
+          "id": "videos",
+          "title": "پڕۆژەی کارە ڤیدیۆکانم",
+          "type": "videos",
+          "content": "لێرە دەتوانیت لینکی ڤیدیۆکان یان پڕۆژەکانی مۆنتاژ زیاد بکەیت.",
+          "videos": [
+            {"title": "Video Editing Project", "url": "https://www.youtube.com/"}
+          ]
+        },
+        {
+          "id": "contact",
+          "title": "پەیوەندی",
+          "type": "contact",
+          "content": "بۆ داواکاری کار یان پڕۆژە پەیوەندی بکە.",
+          "phone": "0000000000",
+          "email": "example@email.com",
+          "instagram": "https://instagram.com/",
+          "facebook": "https://facebook.com/"
+        }
+      ],
+      "footer": "Graphic Designer Portfolio Website Design by SHARIN ALI"
     },
-    {
-      "id": "personal",
-      "title": "زانیاری کەسی",
-      "type": "text",
-      "content": "ناو، شوێن، تەلەفۆن..."
-    },
-    {
-      "id": "experience",
-      "title": "ئەزموونی کارکردنم",
-      "type": "text",
-      "content": "ئەزموونی کارەکانت..."
-    },
-    {
-      "id": "photos",
-      "title": "دیزاینی وێنەکانم",
-      "type": "gallery",
-      "images": []
-    },
-    {
-      "id": "videos",
-      "title": "پڕۆژەی کارە ڤیدیۆکانم",
-      "type": "video",
-      "videos": []
-    },
-    {
-      "id": "contact",
-      "title": "پەیوەندی",
-      "type": "contact",
-      "phone": "",
-      "email": "",
-      "facebook": "",
-      "instagram": ""
+    "en": {
+      "direction": "ltr",
+      "header": {
+        "name": "SHARIN ALI",
+        "job": "Graphic Designer & Video Editor",
+        "menu": ["Home", "Sections", "Contact"]
+      },
+      "hero": {
+        "title": "Hello, I am Sharin Ali",
+        "description": "Welcome to my portfolio. Here you can view my information, experience, photo designs, and video projects.",
+        "button": "View Sections"
+      },
+      "tabs": [
+        {
+          "id": "about",
+          "title": "About Me",
+          "type": "text",
+          "content": "I work in graphic design, photo editing, Photoshop, and video editing. My goal is to deliver clean, beautiful, and professional work."
+        },
+        {
+          "id": "personal",
+          "title": "Personal Info",
+          "type": "text",
+          "content": "Name: SHARIN ALI\nJob: Graphic Designer & Video Editor\nLocation: Kurdistan / Iraq\nLanguages: Kurdish / English"
+        },
+        {
+          "id": "experience",
+          "title": "Work Experience",
+          "type": "text",
+          "content": "I have experience in logo design, social media posts and stories, ads, photo editing, Photoshop, and video editing."
+        },
+        {
+          "id": "photos",
+          "title": "My Photo Designs",
+          "type": "gallery",
+          "content": "Here are samples of my design works.",
+          "images": [
+            {"title": "Social Media Design", "src": "images/gallery/work-1.jpg"},
+            {"title": "Logo Design", "src": "images/gallery/work-2.jpg"},
+            {"title": "Poster Design", "src": "images/gallery/work-3.jpg"}
+          ]
+        },
+        {
+          "id": "videos",
+          "title": "My Video Projects",
+          "type": "videos",
+          "content": "Here you can add video editing links or project links.",
+          "videos": [
+            {"title": "Video Editing Project", "url": "https://www.youtube.com/"}
+          ]
+        },
+        {
+          "id": "contact",
+          "title": "Contact",
+          "type": "contact",
+          "content": "Contact me for work requests or projects.",
+          "phone": "0000000000",
+          "email": "example@email.com",
+          "instagram": "https://instagram.com/",
+          "facebook": "https://facebook.com/"
+        }
+      ],
+      "footer": "Graphic Designer Portfolio Website Design by SHARIN ALI"
     }
-  ],
-  "footer": {
-    "text": "Graphic Designer Portfolio Website Design by SHARIN ALI"
   }
 }
