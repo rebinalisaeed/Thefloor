@@ -3,14 +3,13 @@
     "ku": {
       "direction": "rtl",
       "header": {
-        "name": "SHARIN ALI",
+        "name": "شارین عەلی",
         "job": "گرافیک دیزاینەر و ئیدیتەری ڤیدیۆ",
-        "menu": ["سەرەکی", "بەشەکان", "پەیوەندی"]
+        "menu": ["سەرەکی", "دەربارەی من", "زانیاری کەسی", "ئەزموون", "گالێری", "ڤیدیۆکان"]
       },
       "hero": {
         "title": "سڵاو، من شارین عەلیم",
-        "description": "بەخێربێیت بۆ پۆرتفۆلیۆی من. لێرە دەتوانیت زانیارییەکانم، ئەزموونم، دیزاینی وێنەکانم و پڕۆژەی ڤیدیۆکانم ببینیت.",
-        "button": "بینینی بەشەکان"
+        "description": "بەخێربێیت بۆ پۆرتفۆلیۆی من. لێرە دەتوانیت زانیارییەکانم، ئەزموونم، دیزاینی وێنەکانم و پڕۆژەی ڤیدیۆکانم ببینیت."
       },
       "tabs": [
         {
@@ -23,7 +22,7 @@
           "id": "personal",
           "title": "زانیاری کەسی",
           "type": "text",
-          "content": "ناو: SHARIN ALI\nپیشە: Graphic Designer & Video Editor\nشوێن: Kurdistan / Iraq\nزمان: Kurdish / English"
+          "content": "ناو: شارین عەلی\nپیشە: گرافیک دیزاینەر و ئیدیتەری ڤیدیۆ\nشوێن: Kurdistan / Iraq\nزمان: Kurdish / English"
         },
         {
           "id": "experience",
@@ -50,16 +49,6 @@
           "videos": [
             {"title": "Video Editing Project", "url": "https://www.youtube.com/"}
           ]
-        },
-        {
-          "id": "contact",
-          "title": "پەیوەندی",
-          "type": "contact",
-          "content": "بۆ داواکاری کار یان پڕۆژە پەیوەندی بکە.",
-          "phone": "0000000000",
-          "email": "example@email.com",
-          "instagram": "https://instagram.com/",
-          "facebook": "https://facebook.com/"
         }
       ],
       "footer": "Graphic Designer Portfolio Website Design by SHARIN ALI"
@@ -69,12 +58,11 @@
       "header": {
         "name": "SHARIN ALI",
         "job": "Graphic Designer & Video Editor",
-        "menu": ["Home", "Sections", "Contact"]
+        "menu": ["Home", "About", "Personal Info", "Experience", "Gallery", "Videos"]
       },
       "hero": {
         "title": "Hello, I am Sharin Ali",
-        "description": "Welcome to my portfolio. Here you can view my information, experience, photo designs, and video projects.",
-        "button": "View Sections"
+        "description": "Welcome to my portfolio. Here you can view my information, experience, photo designs, and video projects."
       },
       "tabs": [
         {
@@ -114,16 +102,6 @@
           "videos": [
             {"title": "Video Editing Project", "url": "https://www.youtube.com/"}
           ]
-        },
-        {
-          "id": "contact",
-          "title": "Contact",
-          "type": "contact",
-          "content": "Contact me for work requests or projects.",
-          "phone": "0000000000",
-          "email": "example@email.com",
-          "instagram": "https://instagram.com/",
-          "facebook": "https://facebook.com/"
         }
       ],
       "footer": "Graphic Designer Portfolio Website Design by SHARIN ALI"
