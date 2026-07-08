@@ -8,10 +8,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- هێدەر لابرا، تەنها دوگمەی زمان -->
-  <div class="lang-header">
-    <button class="lang-btn" id="langBtn" type="button">English</button>
-  </div>
+  <!-- هێدەر -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav" id="mainNav">
+          <a href="#home" id="navHome">سەرەکی</a>
+          <a href="#about" id="navAbout">دەربارەی من</a>
+          <a href="#personal" id="navPersonal">زانیاری کەسی</a>
+          <a href="#experience" id="navExperience">ئەزموون</a>
+          <a href="#photos" id="navPhotos">گالێری</a>
+          <a href="#videos" id="navVideos">ڤیدیۆکان</a>
+        </nav>
+      </div>
+      <button class="lang-btn" id="langBtn" type="button">English</button>
+    </div>
+  </header>
 
   <main>
     <section class="hero" id="home">
@@ -28,14 +45,12 @@
       </div>
     </section>
 
-    <section class="tabs-section" id="tabs">
+    <section class="tabs-section" id="about">
       <div class="container">
         <div class="tabs" id="tabButtons"></div>
         <div class="tab-panel" id="tabPanel"></div>
       </div>
     </section>
-
-    <!-- بەشی پەیوەندی تەواو لابرا -->
   </main>
 
   <footer class="footer" id="footerText">Graphic Designer Portfolio Website Design by SHARIN ALI</footer>
