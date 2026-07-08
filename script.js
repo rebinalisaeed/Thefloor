@@ -1,265 +1,179 @@
-// Global Variables
-let gameData = {};
-let playersList = [];
-let currentCategory = "animals";
-let currentImagesList = [];
-let currentIndex = 0;
-let currentActive = 1;
-let timers = {1: 45, 2: 45};
-let gameActive = false;
-let timerInterval = null;
-let p1Name = "", p2Name = "";
-let totalTime = 45;
-let passPenalty = 3;
-let isLoading = true;
+/* ===============================
+   Portfolio Website Script
+   SHARIN ALI
+================================ */
 
-// Load data from JSON file
-async function loadGameData() {
-    const loadingDiv = document.getElementById("loading-status");
-    if (loadingDiv) loadingDiv.innerHTML = "⏳ بارکردنی داتا لە JSON فایل...";
-    
-    try {
-        const response = await fetch('floor-data.json');
-        if (!response.ok) throw new Error('JSON فایل نەدۆزرایەوە');
-        const data = await response.json();
-        
-        gameData = data.categories || {};
-        playersList = data.players || [];
-        totalTime = data.settings?.totalTime || 45;
-        passPenalty = data.settings?.passPenalty || 3;
-        
-        if (loadingDiv) loadingDiv.innerHTML = "✅ داتا سەرکەوتوو بارکرا!";
-        console.log("✅ داتا لە JSON فایلەوە بارکرا");
-    } catch (error) {
-        console.error("❌ هەڵە لە بارکردنی JSON:", error);
-        if (loadingDiv) loadingDiv.innerHTML = "⚠️ JSON فایل نەدۆزرایەوە، داتای بنەڕەتی بەکاردهێنرێت";
-        setDefaultData();
+const langBtn = document.getElementById("langBtn");
+const menuBtn = document.getElementById("menuBtn");
+const navMenu = document.getElementById("navMenu");
+
+let currentLang = "ku";
+
+/* ===============================
+   Translations
+================================ */
+const translations = {
+  ku: {
+    navHome: "سەرەکی",
+    navAbout: "دەربارە",
+    navServices: "خزمەتگوزاری",
+    navPortfolio: "کارەکان",
+    navContact: "پەیوەندی",
+
+    heroLabel: "پۆرتفۆلیۆی دیزاینەر",
+    heroTitle1: "سڵاو، من",
+    heroTitle2: "گرافیک دیزاینەر، ئیدیتەری وێنە و ڤیدیۆ",
+    heroDescription:
+      "من یارمەتی براندەکان، پەیجەکان و کەسەکان دەدەم تا لە ڕێگەی دیزاینی جوان، وێنەی پیشەیی و ڤیدیۆی کاریگەر، خۆیان باشتر پیشان بدەن.",
+    viewWorks: "بینینی کارەکانم",
+    contactMe: "پەیوەندیم پێوە بکە",
+
+    aboutTitle: "دەربارەی من",
+    aboutText:
+      "من شارین عەلیم، کارم لە بواری گرافیک دیزاین، ئیدیتی وێنە، فۆتۆشۆپ و مۆنتاژی ڤیدیۆیە. ئامانجم ئەوەیە دیزاینێکی جوان، ڕوون و کاریگەر دروست بکەم کە پەیامی براند یان کەسەکە بەباشی بگەیەنێت.",
+
+    servicesTitle: "خزمەتگوزارییەکان",
+    service1Title: "دیزاینی لۆگۆ",
+    service1Text: "دروستکردنی لۆگۆی جوان و تایبەت بۆ براند و پڕۆژەکان.",
+    service2Title: "دیزاینی سۆشیال میدیا",
+    service2Text: "دیزاینی پۆست، ستۆری و ڕیکلام بۆ پەیجەکانی سۆشیال میدیا.",
+    service3Title: "ئیدیتی وێنە",
+    service3Text: "ڕێکخستن، جوانکردن و دەستکاری پیشەیی وێنەکان.",
+    service4Title: "مۆنتاژی ڤیدیۆ",
+    service4Text: "مۆنتاژ، ڕێکخستن و دروستکردنی ڤیدیۆی کاریگەر.",
+
+    portfolioTitle: "کارەکانم",
+
+    skillsTitle: "بەرنامە و شارەزاییەکان",
+
+    contactTitle: "پەیوەندی",
+    contactText:
+      "بۆ داواکاری کار، پڕۆژە، یان پرسیار، دەتوانیت پەیوەندیم پێوە بکەیت.",
+
+    whatsapp: "واتساپ",
+    instagram: "ئینستاگرام",
+    facebook: "فەیسبووک",
+    email: "ئیمەیڵ"
+  },
+
+  en: {
+    navHome: "Home",
+    navAbout: "About",
+    navServices: "Services",
+    navPortfolio: "Portfolio",
+    navContact: "Contact",
+
+    heroLabel: "Designer Portfolio",
+    heroTitle1: "Hello, I am",
+    heroTitle2: "Graphic Designer, Photo Editor & Video Editor",
+    heroDescription:
+      "I help brands, pages, and individuals present themselves better through beautiful design, professional photo editing, and impactful video editing.",
+    viewWorks: "View My Works",
+    contactMe: "Contact Me",
+
+    aboutTitle: "About Me",
+    aboutText:
+      "I am Sharin Ali. I work in graphic design, photo editing, Photoshop, and video editing. My goal is to create beautiful, clear, and effective designs that deliver the message of a brand or person professionally.",
+
+    servicesTitle: "Services",
+    service1Title: "Logo Design",
+    service1Text: "Creating beautiful and unique logos for brands and projects.",
+    service2Title: "Social Media Design",
+    service2Text: "Designing posts, stories, and ads for social media pages.",
+    service3Title: "Photo Editing",
+    service3Text: "Professional photo retouching, enhancement, and editing.",
+    service4Title: "Video Editing",
+    service4Text: "Editing, organizing, and creating impactful videos.",
+
+    portfolioTitle: "My Works",
+
+    skillsTitle: "Tools & Skills",
+
+    contactTitle: "Contact",
+    contactText:
+      "For work requests, projects, or questions, you can contact me directly.",
+
+    whatsapp: "WhatsApp",
+    instagram: "Instagram",
+    facebook: "Facebook",
+    email: "Email"
+  }
+};
+
+/* ===============================
+   Change Language
+================================ */
+function changeLanguage(lang) {
+  currentLang = lang;
+
+  document.documentElement.lang = lang;
+
+  if (lang === "ku") {
+    document.documentElement.dir = "rtl";
+    document.body.setAttribute("dir", "rtl");
+    langBtn.textContent = "EN";
+  } else {
+    document.documentElement.dir = "ltr";
+    document.body.setAttribute("dir", "ltr");
+    langBtn.textContent = "KU";
+  }
+
+  const elements = document.querySelectorAll("[data-key]");
+
+  elements.forEach((element) => {
+    const key = element.getAttribute("data-key");
+
+    if (translations[lang][key]) {
+      element.textContent = translations[lang][key];
     }
-    
-    populateCategorySelect();
-    populatePlayerSelects();
-    isLoading = false;
+  });
+
+  localStorage.setItem("portfolioLang", lang);
 }
 
-function setDefaultData() {
-    gameData = {
-        animals: ["شێر", "پڵنگ", "فیل", "زرافە", "کەروێشک"],
-        birds: ["ھەڵۆ", "باز", "بولبول", "قوو", "کەو"],
-        flags: ["عێراق", "ئێران", "تورکیا", "ئەمریکا", "بەریتانیا"],
-        maps: ["عێراق", "مەغریب", "جەزائیر", "کەنەدا", "مەکسیک"],
-        players_names: ["مێسی", "ڕۆناڵدۆ", "نەیمار", "مباپێ"],
-        leaders: ["سەلاحەدین", "قەدافی", "ئەتاتورک"],
-        celebrities: ["تۆم هەنکس", "وێڵ سمیت", "ئەنجلینا جۆلی"],
-        furniture: ["جێگا", "مێز", "پۆلیف"],
-        cars: ["تایۆتا", "ھۆندا", "فۆرد"],
-        brands: ["ئەپڵ", "سامسۆنگ", "نایکی"],
-        car_logos: ["تایۆتا", "فۆرد", "بێنز"],
-        games: ["فیفا", "کاڵ ئۆف دیوتی", "پابجی"]
-    };
-    playersList = ["ئارام", "ژوان", "سۆران"];
-    totalTime = 45;
-    passPenalty = 3;
-}
-
-function populateCategorySelect() {
-    const select = document.getElementById("category-select");
-    if (!select) return;
-    select.innerHTML = "";
-    const categoryNames = {
-        animals: "🦁 ئاژەڵان",
-        birds: "🦜 باڵندەکان",
-        flags: "🏁 ئاڵای وڵاتان",
-        maps: "🗺️ نەخشەی وڵاتان",
-        players_names: "⚽ ناوی یاریزانان",
-        leaders: "👑 ناوی سەرۆکەکان",
-        celebrities: "⭐ کەسایتی گەورە",
-        furniture: "🛋️ کەل و پەل",
-        cars: "🚗 ئۆتۆمبێل",
-        brands: "🏷️ لۆگۆی براندەکان",
-        car_logos: "🚘 لۆگۆی ئۆتۆمبێل",
-        games: "🎮 یاریە ئەلیکترۆنیەکان"
-    };
-    
-    Object.keys(gameData).forEach(cat => {
-        const displayName = categoryNames[cat] || cat;
-        select.innerHTML += `<option value="${cat}">${displayName}</option>`;
-    });
-}
-
-function populatePlayerSelects() {
-    const p1Select = document.getElementById("player1-select");
-    const p2Select = document.getElementById("player2-select");
-    if (!p1Select || !p2Select) return;
-    p1Select.innerHTML = "";
-    p2Select.innerHTML = "";
-    playersList.forEach(p => {
-        p1Select.innerHTML += `<option value="${p}">${p}</option>`;
-        p2Select.innerHTML += `<option value="${p}">${p}</option>`;
-    });
-}
-
-function loadQuestion() {
-    if (!gameActive) return;
-    const imgElement = document.getElementById("game-image");
-    const randomId = Math.floor(Math.random() * 200) + 1;
-    imgElement.src = `https://picsum.photos/id/${randomId}/1920/1080`;
-    document.getElementById("status-msg").innerHTML = "";
-    document.getElementById("correct-badge").innerHTML = "❓";
-}
-
-function updateTimersUI() {
-    document.getElementById("p1-time").innerHTML = timers[1].toFixed(1);
-    document.getElementById("p2-time").innerHTML = timers[2].toFixed(1);
-    
-    if (currentActive === 1) {
-        document.getElementById("p1-info").classList.add("active-turn");
-        document.getElementById("p2-info").classList.remove("active-turn");
-    } else {
-        document.getElementById("p2-info").classList.add("active-turn");
-        document.getElementById("p1-info").classList.remove("active-turn");
-    }
-}
-
-function switchTurn() {
-    if (!gameActive) return;
-    if (timers[currentActive] <= 0) {
-        endGame(3 - currentActive);
-        return;
-    }
-    currentActive = currentActive === 1 ? 2 : 1;
-    updateTimersUI();
-    document.getElementById("status-msg").innerHTML = `نۆرەی ${currentActive === 1 ? p1Name : p2Name}`;
-    setTimeout(() => {
-        if (gameActive) document.getElementById("status-msg").innerHTML = "";
-    }, 1500);
-}
-
-function startTimer() {
-    if (timerInterval) clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-        if (!gameActive) return;
-        if (timers[currentActive] <= 0) {
-            clearInterval(timerInterval);
-            endGame(3 - currentActive);
-            return;
-        }
-        timers[currentActive] -= 0.1;
-        if (timers[currentActive] < 0) timers[currentActive] = 0;
-        updateTimersUI();
-        if (timers[currentActive] <= 0) {
-            clearInterval(timerInterval);
-            endGame(3 - currentActive);
-        }
-    }, 100);
-}
-
-function endGame(winner) {
-    gameActive = false;
-    if (timerInterval) clearInterval(timerInterval);
-    const winnerName = winner === 1 ? p1Name : p2Name;
-    alert(`🏆 کۆتایی! براوە: ${winnerName} 🏆\nکلیکی ئۆک بکە بۆ گەڕانەوە`);
-    location.reload();
-}
-
-function checkAnswer(answerText) {
-    if (!gameActive) return;
-    if (!currentImagesList[currentIndex]) {
-        endGame(currentActive);
-        return;
-    }
-    const correctAnswer = currentImagesList[currentIndex].toLowerCase();
-    const userAnswer = answerText.trim().toLowerCase();
-    
-    if (userAnswer === correctAnswer) {
-        document.getElementById("correct-badge").innerHTML = "✅ دروستە!";
-        setTimeout(() => {
-            if (gameActive) document.getElementById("correct-badge").innerHTML = "❓";
-        }, 500);
-        
-        currentIndex++;
-        if (currentIndex >= currentImagesList.length) {
-            endGame(currentActive);
-            return;
-        }
-        switchTurn();
-        loadQuestion();
-    } else {
-        document.getElementById("status-msg").innerHTML = "❌ هەڵە! هەوڵبدەرەوە";
-        setTimeout(() => {
-            if (gameActive) document.getElementById("status-msg").innerHTML = "";
-        }, 800);
-    }
-}
-
-function passQuestion() {
-    if (!gameActive) return;
-    timers[currentActive] = Math.max(0, timers[currentActive] - passPenalty);
-    updateTimersUI();
-    if (timers[currentActive] <= 0) {
-        endGame(3 - currentActive);
-        return;
-    }
-    currentIndex++;
-    if (currentIndex >= currentImagesList.length) {
-        endGame(currentActive);
-        return;
-    }
-    loadQuestion();
-    document.getElementById("status-msg").innerHTML = `⏭️ پەڕاندن! ${passPenalty} چرکە سزا`;
-    setTimeout(() => {
-        if (gameActive) document.getElementById("status-msg").innerHTML = "";
-    }, 1000);
-}
-
-function startGame() {
-    if (isLoading) {
-        alert("تکایە چاوەڕێ بکە هەتا داتاکان تەواو باربکرێن");
-        return;
-    }
-    
-    p1Name = document.getElementById("player1-select").value;
-    p2Name = document.getElementById("player2-select").value;
-    currentCategory = document.getElementById("category-select").value;
-    
-    currentImagesList = [...(gameData[currentCategory] || [])];
-    if (currentImagesList.length === 0) {
-        alert("هیچ ناوێک لەم کاتەگۆرییەدا نییە! تکایە بچۆ بۆ Admin Panel و ناو زیاد بکە.");
-        return;
-    }
-    currentImagesList = currentImagesList.map(s => s.toLowerCase());
-    currentIndex = 0;
-    timers = {1: totalTime, 2: totalTime};
-    currentActive = 1;
-    gameActive = true;
-    
-    document.getElementById("p1-name").innerHTML = p1Name;
-    document.getElementById("p2-name").innerHTML = p2Name;
-    updateTimersUI();
-    
-    document.getElementById("setup-screen").classList.add("hidden");
-    document.getElementById("game-screen").classList.remove("hidden");
-    
-    loadQuestion();
-    startTimer();
-    document.getElementById("status-msg").innerHTML = `⚔️ دەستپێک! نۆرەی ${p1Name}`;
-    
-    // Request fullscreen
-    document.documentElement.requestFullscreen();
-}
-
-// Keyboard controls
-document.addEventListener("keydown", (e) => {
-    if (!gameActive) return;
-    if (e.key === "Enter") {
-        e.preventDefault();
-        const answer = prompt("وەڵامەکە بنووسە:");
-        if (answer !== null && answer.trim() !== "") checkAnswer(answer);
-    } else if (e.key === " " || e.key === "Space") {
-        e.preventDefault();
-        passQuestion();
-    }
+/* ===============================
+   Language Button
+================================ */
+langBtn.addEventListener("click", () => {
+  if (currentLang === "ku") {
+    changeLanguage("en");
+  } else {
+    changeLanguage("ku");
+  }
 });
 
-// Initialize
-loadGameData();
-document.getElementById("start-game-btn").addEventListener("click", startGame);
+/* ===============================
+   Mobile Menu
+================================ */
+menuBtn.addEventListener("click", () => {
+  navMenu.classList.toggle("active");
+
+  if (navMenu.classList.contains("active")) {
+    menuBtn.textContent = "×";
+  } else {
+    menuBtn.textContent = "☰";
+  }
+});
+
+/* ===============================
+   Close Menu After Click
+================================ */
+const navLinks = document.querySelectorAll(".nav-menu a");
+
+navLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    navMenu.classList.remove("active");
+    menuBtn.textContent = "☰";
+  });
+});
+
+/* ===============================
+   Load Saved Language
+================================ */
+const savedLang = localStorage.getItem("portfolioLang");
+
+if (savedLang === "en") {
+  changeLanguage("en");
+} else {
+  changeLanguage("ku");
+}
