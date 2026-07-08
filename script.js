@@ -19,18 +19,18 @@ $("navVideos").textContent=data.tabs[4].title;
 $("cardName").textContent=currentLang==="ku"?"شارین عەلی":"SHARIN ALI";
 $("cardJob").textContent=currentLang==="ku"?"گرافیک دیزاینەر و ئیدیتەری ڤیدیۆ":"Graphic Designer & Video Editor";
 $("heroTitle").textContent=data.hero.title;$("heroDescription").textContent=data.hero.description;$("footerText").textContent=data.footer;
-renderTabs();
+// نیشاندانی ناوەڕۆک (بەبێ دوگمە)
+showContent(activeTab);
 // ڕووداو بۆ مێنیوی مۆبایل
 setupMobileMenu();
 }
 
-function renderTabs(){const data=t();const buttons=$("tabButtons");buttons.innerHTML="";data.tabs.forEach((tab,i)=>{const btn=document.createElement("button");btn.className="tab-btn"+(i===activeTab?" active":"");btn.textContent=tab.title;btn.onclick=()=>{activeTab=i;renderTabs();scrollToTabs()};buttons.appendChild(btn)});renderPanel(data.tabs[activeTab])}
+function showContent(index){const data=t();const tab=data.tabs[index];if(!tab)return;const panel=$("contentPanel");let html=`<h2>${escapeHtml(tab.title)}</h2>`;if(tab.content)html+=`<p>${escapeHtml(tab.content)}</p>`;if(tab.type==="gallery"){html+='<div class="gallery">';(tab.images||[]).forEach(img=>{html+=`<div class="gallery-item" data-src="${escapeAttr(img.src)}"><img src="${escapeAttr(img.src)}" alt="${escapeAttr(img.title)}" onerror="this.style.display='none'"><span>${escapeHtml(img.title)}</span></div>`});html+='</div>'}if(tab.type==="videos"){html+='<div class="video-list">';(tab.videos||[]).forEach(v=>{html+=`<a href="${escapeAttr(v.url)}" target="_blank" rel="noopener">▶ ${escapeHtml(v.title)}</a>`});html+='</div>'}panel.innerHTML=html;panel.querySelectorAll(".gallery-item").forEach(item=>item.onclick=()=>openLightbox(item.dataset.src))}
 
-function renderPanel(tab){const panel=$("tabPanel");let html=`<h2>${escapeHtml(tab.title)}</h2>`;if(tab.content)html+=`<p>${escapeHtml(tab.content)}</p>`;if(tab.type==="gallery"){html+='<div class="gallery">';(tab.images||[]).forEach(img=>{html+=`<div class="gallery-item" data-src="${escapeAttr(img.src)}"><img src="${escapeAttr(img.src)}" alt="${escapeAttr(img.title)}" onerror="this.style.display='none'"><span>${escapeHtml(img.title)}</span></div>`});html+='</div>'}if(tab.type==="videos"){html+='<div class="video-list">';(tab.videos||[]).forEach(v=>{html+=`<a href="${escapeAttr(v.url)}" target="_blank" rel="noopener">▶ ${escapeHtml(v.title)}</a>`});html+='</div>'}panel.innerHTML=html;panel.querySelectorAll(".gallery-item").forEach(item=>item.onclick=()=>openLightbox(item.dataset.src))}
+function setupMobileMenu(){const toggle=$("menuToggle");const nav=$("mainNav");if(toggle){toggle.onclick=()=>{toggle.classList.toggle("active");nav.classList.toggle("open")};document.querySelectorAll(".nav a").forEach(link=>{link.onclick=(e)=>{e.preventDefault();const href=link.getAttribute("href");if(href){const target=href.replace("#","");const tabIndex=document.querySelector(`#${target}`)?.["dataset"]?.index;if(tabIndex!==undefined){activeTab=parseInt(tabIndex);showContent(activeTab)}else if(target==="home"){document.getElementById("home").scrollIntoView({behavior:"smooth"})}else{const idx=["home","about","personal","experience","photos","videos"].indexOf(target);if(idx>0){activeTab=idx-1;showContent(activeTab)}}}toggle.classList.remove("active");nav.classList.remove("open")}})}}
 
-function setupMobileMenu(){const toggle=$("menuToggle");const nav=$("mainNav");if(toggle){toggle.onclick=()=>{toggle.classList.toggle("active");nav.classList.toggle("open")};document.querySelectorAll(".nav a").forEach(link=>{link.onclick=()=>{toggle.classList.remove("active");nav.classList.remove("open")}})}}
-
-function scrollToTabs(){document.getElementById("about").scrollIntoView({behavior:"smooth"})}
+// کلیک لەسەر لینکەکانی هێدەر
+document.querySelectorAll(".nav a").forEach((link,index)=>{link.addEventListener("click",function(e){e.preventDefault();const href=this.getAttribute("href");if(href==="#home"){document.getElementById("home").scrollIntoView({behavior:"smooth"});return}const sections=["about","personal","experience","photos","videos"];const target=href.replace("#","");const idx=sections.indexOf(target);if(idx!==-1){activeTab=idx;showContent(activeTab);document.getElementById("about").scrollIntoView({behavior:"smooth"})}})});
 
 function openLightbox(src){$("lightboxImg").src=src;$("lightbox").classList.add("active")}
 
