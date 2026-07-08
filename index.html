@@ -1,61 +1,197 @@
 <!DOCTYPE html>
-<html lang="ckb">
+<html lang="ku" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>The Floor - Full Screen Duel</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SHARIN ALI | Graphic Designer & Video Editor</title>
+
+  <meta name="description" content="Portfolio website for SHARIN ALI, graphic designer, photo editor, and video editor." />
+  <meta name="keywords" content="Sharin Ali, Graphic Designer, Video Editor, Photoshop, Portfolio, Kurdish Designer" />
+  <meta name="author" content="SHARIN ALI" />
+
+  <meta property="og:title" content="SHARIN ALI Portfolio" />
+  <meta property="og:description" content="Graphic Designer, Photo Editor, and Video Editor Portfolio." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/profile/profile.jpg" />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <!-- Setup Screen -->
-    <div id="setup-screen" class="setup-screen">
-        <div class="setup-card">
-            <h1>⚡ THE FLOOR ⚡</h1>
-            <p>دوارەکە - هەڵبژاردنی یاریزانان و بابەت</p>
-            
-            <div class="setup-group">
-                <label>🎮 یاریکەری یەکەم</label>
-                <select id="player1-select"></select>
-            </div>
-            
-            <div class="setup-group">
-                <label>⚔️ یاریکەری دووەم</label>
-                <select id="player2-select"></select>
-            </div>
-            
-            <div class="setup-group">
-                <label>📂 بابەت (کاتەگۆری)</label>
-                <select id="category-select"></select>
-            </div>
-            
-            <button id="start-game-btn" class="btn-start">▶️ دەستپێکردنی یاری</button>
-            <div id="loading-status" style="color:#D4AF37; margin-top:15px; font-size:0.9rem;"></div>
-        </div>
-    </div>
 
-    <!-- Game Screen (Full Screen) -->
-    <div id="game-screen" class="game-screen hidden">
-        <img id="game-image" class="game-image" alt="وێنەی یاری">
-        
-        <!-- Bottom 15% Overlay -->
-        <div class="game-overlay">
-            <div class="players-info">
-                <div class="player-info" id="p1-info">
-                    <span class="player-name-display" id="p1-name">Player 1</span>
-                    <span class="player-time" id="p1-time">00.0</span>
-                </div>
-                <div class="vs-middle">
-                    <span id="correct-badge">❓</span>
-                </div>
-                <div class="player-info" id="p2-info">
-                    <span class="player-name-display" id="p2-name">Player 2</span>
-                    <span class="player-time" id="p2-time">00.0</span>
-                </div>
-            </div>
-            <div class="status-message" id="status-msg"></div>
-        </div>
-    </div>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-content">
 
-    <script src="script.js"></script>
+      <a href="#" class="logo">SHARIN ALI</a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="#home" data-key="navHome">سەرەکی</a>
+        <a href="#about" data-key="navAbout">دەربارە</a>
+        <a href="#services" data-key="navServices">خزمەتگوزاری</a>
+        <a href="#portfolio" data-key="navPortfolio">کارەکان</a>
+        <a href="#contact" data-key="navContact">پەیوەندی</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="lang-btn" id="langBtn">EN</button>
+        <button class="menu-btn" id="menuBtn">☰</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Home -->
+  <main>
+
+    <section class="hero-section" id="home">
+      <div class="container hero-content">
+
+        <div class="hero-text">
+          <p class="hero-label" data-key="heroLabel">پۆرتفۆلیۆی دیزاینەر</p>
+
+          <h1>
+            <span data-key="heroTitle1">سڵاو، من</span>
+            <strong>SHARIN ALI</strong>
+          </h1>
+
+          <h2 data-key="heroTitle2">
+            گرافیک دیزاینەر، ئیدیتەری وێنە و ڤیدیۆ
+          </h2>
+
+          <p class="hero-description" data-key="heroDescription">
+            من یارمەتی براندەکان، پەیجەکان و کەسەکان دەدەم تا لە ڕێگەی دیزاینی جوان،
+            وێنەی پیشەیی و ڤیدیۆی کاریگەر، خۆیان باشتر پیشان بدەن.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#portfolio" class="primary-btn" data-key="viewWorks">بینینی کارەکانم</a>
+            <a href="#contact" class="secondary-btn" data-key="contactMe">پەیوەندیم پێوە بکە</a>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <img src="images/profile/profile.jpg" alt="SHARIN ALI Profile Photo" />
+        </div>
+
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section-title" data-key="aboutTitle">دەربارەی من</h2>
+
+        <p class="section-text" data-key="aboutText">
+          من شارین عەلیم، کارم لە بواری گرافیک دیزاین، ئیدیتی وێنە، فۆتۆشۆپ و مۆنتاژی ڤیدیۆیە.
+          ئامانجم ئەوەیە دیزاینێکی جوان، ڕوون و کاریگەر دروست بکەم کە پەیامی براند یان کەسەکە بەباشی بگەیەنێت.
+        </p>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section dark-section" id="services">
+      <div class="container">
+        <h2 class="section-title" data-key="servicesTitle">خزمەتگوزارییەکان</h2>
+
+        <div class="cards-grid">
+
+          <div class="service-card">
+            <h3 data-key="service1Title">Logo Design</h3>
+            <p data-key="service1Text">دروستکردنی لۆگۆی جوان و تایبەت بۆ براند و پڕۆژەکان.</p>
+          </div>
+
+          <div class="service-card">
+            <h3 data-key="service2Title">Social Media Design</h3>
+            <p data-key="service2Text">دیزاینی پۆست، ستۆری و ڕیکلام بۆ پەیجەکانی سۆشیال میدیا.</p>
+          </div>
+
+          <div class="service-card">
+            <h3 data-key="service3Title">Photo Editing</h3>
+            <p data-key="service3Text">ڕێکخستن، جوانکردن و دەستکاری پیشەیی وێنەکان.</p>
+          </div>
+
+          <div class="service-card">
+            <h3 data-key="service4Title">Video Editing</h3>
+            <p data-key="service4Text">مۆنتاژ، ڕێکخستن و دروستکردنی ڤیدیۆی کاریگەر.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="section" id="portfolio">
+      <div class="container">
+        <h2 class="section-title" data-key="portfolioTitle">کارەکانم</h2>
+
+        <div class="portfolio-grid">
+
+          <div class="portfolio-item">
+            <img src="images/portfolio/work-1.jpg" alt="Portfolio Work 1" />
+          </div>
+
+          <div class="portfolio-item">
+            <img src="images/portfolio/work-2.jpg" alt="Portfolio Work 2" />
+          </div>
+
+          <div class="portfolio-item">
+            <img src="images/portfolio/work-3.jpg" alt="Portfolio Work 3" />
+          </div>
+
+          <div class="portfolio-item">
+            <img src="images/portfolio/work-4.jpg" alt="Portfolio Work 4" />
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section dark-section" id="skills">
+      <div class="container">
+        <h2 class="section-title" data-key="skillsTitle">بەرنامە و شارەزاییەکان</h2>
+
+        <div class="skills-list">
+          <span>Adobe Photoshop</span>
+          <span>Adobe Illustrator</span>
+          <span>Adobe Premiere Pro</span>
+          <span>Adobe After Effects</span>
+          <span>Canva</span>
+          <span>CapCut</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <div class="container">
+        <h2 class="section-title" data-key="contactTitle">پەیوەندی</h2>
+
+        <p class="section-text" data-key="contactText">
+          بۆ داواکاری کار، پڕۆژە، یان پرسیار، دەتوانیت پەیوەندیم پێوە بکەیت.
+        </p>
+
+        <div class="contact-links">
+          <a href="#" data-key="whatsapp">WhatsApp</a>
+          <a href="#" data-key="instagram">Instagram</a>
+          <a href="#" data-key="facebook">Facebook</a>
+          <a href="#" data-key="email">Email</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>
+      Graphic Designer Portfolio Website Design by
+      <strong>SHARIN ALI</strong>
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
