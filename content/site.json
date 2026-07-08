@@ -1,0 +1,39 @@
+{
+  "header": {
+    "title": "SHARIN ALI",
+    "subtitle": "Graphic Designer & Video Editor"
+  },
+  "greeting": {
+    "title": "سڵاو، من شارین عەلیم",
+    "text": "من کار لە بواری گرافیک دیزاین، ئیدیتی وێنە، فۆتۆشۆپ و مۆنتاژی ڤیدیۆ دەکەم."
+  },
+  "tabs": [
+    {
+      "title": "دەربارەی من",
+      "content": "من دیزاینەرێکی گرافیکم و حەزم لە دروستکردنی دیزاینی جوان، پاک و کاریگەرە."
+    },
+    {
+      "title": "زانیاری کەسی",
+      "content": "ناو: SHARIN ALI\nپیشە: Graphic Designer & Video Editor\nشوێن: Kurdistan / Iraq"
+    },
+    {
+      "title": "ئەزموونی کارکردنم",
+      "content": "ئەزموونم لە دیزاینی پۆست، لۆگۆ، فۆتۆشۆپ، ئیدیتی وێنە و مۆنتاژی ڤیدیۆ هەیە."
+    },
+    {
+      "title": "دیزاینی وێنەکانم",
+      "content": "لێرە دەتوانیت نموونەی کارەکانی دیزاینی وێنەکانم دابنێیت."
+    },
+    {
+      "title": "پڕۆژەی کارە ڤیدیۆکانم",
+      "content": "لێرە دەتوانیت لینکی ڤیدیۆکان یان پڕۆژەکانی مۆنتاژ دابنێیت."
+    },
+    {
+      "title": "پەیوەندی",
+      "content": "WhatsApp: 0000000000\nInstagram: @sharin\nEmail: example@email.com"
+    }
+  ],
+  "footer": {
+    "text": "Graphic Designer Portfolio Website Design by SHARIN ALI"
+  }
+}
